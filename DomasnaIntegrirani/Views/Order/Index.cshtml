@@ -1,0 +1,59 @@
+﻿@model List<ECinemaTicket.Domain.DomainModels.Order>
+
+<h1 class="mb-3 ml-2 display-3">Site narachki:</h1>
+
+<div class="container">
+
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead bg-primary">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Informacii za kupuvachot</th>
+                    <th scope="col">Vkupen broj na bileti</th>
+                    <th scope="col" class="text-center">Akcii</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @if (Model.Count.Equals(0))
+                {
+                    <tr>
+                        <td colspan="6" style="font-weight: bold; text-transform: uppercase; text-align: center;">Nemate momentalno narachki</td>
+                    </tr>
+                }
+
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var item = Model[i];
+
+                    <tr>
+                        <th scope="row">@(i+1)</th>
+                        <td>@item.User.Email</td>
+
+                        @if (item.Tickets.Count != 0)
+                        {
+                            <td>@item.Tickets.Count</td>
+                        }
+                        @if (item.Tickets.Count == 0)
+                        {
+                            <td class="text-center font-weight-bold text-uppercase">Nema bileti vo ovaa narachka</td>
+                        }
+
+
+                        <td colspan="3" class="text-center">
+                            @if (item.Tickets.Count != 0)
+                            {
+                                <a class="btn btn-outline-dark" asp-route-orderId="@item.Id" asp-action="Details">Pregledaj narachka</a>
+                                <a class="btn btn-outline-info" asp-route-orderId="@item.Id" asp-action="CreateInvoice">Create Invoice</a>
+                            }
+                        </td>
+                    </tr>
+
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
